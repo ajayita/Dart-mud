@@ -1,0 +1,16 @@
+# Dart and package tooling
+.dart_tool/
+.pub/
+.packages
+
+# Build and test outputs
+build/
+coverage/
+
+# Logs
+*.log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
