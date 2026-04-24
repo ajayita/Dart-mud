@@ -7,10 +7,12 @@
 build/
 coverage/
 
+# Runtime data
+users/*.usr
+
 # Logs
 *.log
 
 # OS-generated files
 .DS_Store
 Thumbs.db
-

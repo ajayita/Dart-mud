@@ -1,5 +1,4 @@
-interface Manager {
-  void add(var object);
-  void remove(var object);
-
+abstract interface class Manager<T> {
+  void add(T object);
+  void remove(T object);
 }

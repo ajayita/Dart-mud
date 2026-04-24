@@ -1,28 +1,195 @@
-Dart-Mud is a very simple Mud based on Google's Dart language.
-This is an example of server side scripting.
+# DartMud
 
-Please note that this is still in development and not secure in the least!
-There are currently encryption for passwords and I do not recommend opening
-up this mud to a public interface. Private testing only for the time being.
+DartMud is a small telnet-style MUD server written in Dart and updated to run on
+modern Dart 3. The current codebase keeps the original gameplay loop and legacy
+save-file format, while moving the real implementation into a package-based
+layout under `lib/src/`.
 
-Also note that this does not implement the full telnet protocol.
+This project is still intended for local development and experimentation. It is
+not hardened for public deployment.
 
-Unfortunately this hasn't been kept up-to-date with more recent Dart language
-and library updates and it is subject to breakage. Hopefully in the near future
-I can find some more time to devote to continuing development and documentation
-of this project. It is currently a preview only.
+## Status
 
-To test out the mud:
-* In the Dart Editor, open the folder you stored the mud in. (eg: mud)
-* Open the DartMud.dart file and run it from the editor.
-* In a console/terminal window, telnet to localhost port 5700
-(eg: telnet localhost 5700)
+- Runs on Dart 3 with null safety
+- Starts from `bin/dartmud.dart`
+- Keeps compatibility wrapper entrypoints such as `DartMud.dart`
+- Stores player files in `users/*.usr`
+- Supports the legacy login flow, room movement, and built-in commands
 
-Create a new account when logging in (there are no default accounts provided).
-Once logged in, use the 'help' command to see what commands are available to
-you.
+## Security Notes
 
-To properly terminate the mud, rather than using the IDE tools to stop the
-execution, use the 'shutdown' command while connected to the mud.
+- Passwords are stored in plain text
+- The telnet support is minimal and does not implement the full telnet protocol
+- Do not expose this server to the public internet
+- Keep testing on `127.0.0.1`
 
-(licencing and such files to be added soon.)
+## Requirements
+
+- Dart SDK 3.0 or newer
+- `telnet` or `nc`/`netcat` for manual connection testing
+
+## Setup
+
+1. Install Dart 3 on your machine and confirm it is available:
+
+```bash
+dart --version
+```
+
+2. Download the repository:
+
+```bash
+git clone <repository-url>
+cd dartmud
+```
+
+3. Install package dependencies:
+
+```bash
+dart pub get
+```
+
+4. Start the server:
+
+```bash
+dart run bin/dartmud.dart
+```
+
+5. In a second terminal, connect locally:
+
+```bash
+telnet 127.0.0.1 5700
+```
+
+6. Create a character and use `help` to see available commands.
+
+## Download
+
+Clone the repository with git:
+
+```bash
+git clone <repository-url>
+cd dartmud
+```
+
+If you downloaded a zip archive instead, extract it and open a terminal in the
+project directory.
+
+## Install Dependencies
+
+Fetch package metadata before running or testing:
+
+```bash
+dart pub get
+```
+
+## Run The Server
+
+The primary entrypoint is the package binary:
+
+```bash
+dart run bin/dartmud.dart
+```
+
+By default the server listens on `127.0.0.1:5700`.
+
+For compatibility with the original layout, this wrapper also works:
+
+```bash
+dart DartMud.dart
+```
+
+## Quick Start
+
+If you want the shortest path from clone to playing locally:
+
+```bash
+git clone <repository-url>
+cd dartmud
+dart pub get
+dart run bin/dartmud.dart
+```
+
+Then, in another terminal:
+
+```bash
+telnet 127.0.0.1 5700
+```
+
+## Connect To The MUD
+
+In another terminal, connect over localhost:
+
+```bash
+telnet 127.0.0.1 5700
+```
+
+If `telnet` is not installed, you can use:
+
+```bash
+nc 127.0.0.1 5700
+```
+
+Create a new account when prompted. There are no default accounts checked into
+the repository.
+
+## Basic Commands
+
+Once logged in, try:
+
+- `help`
+- `look`
+- `say <text>`
+- `who`
+- `emote <text>`
+- `prompt <text>`
+- `home`
+- `ed`
+- `exit`
+- `shutdown`
+
+Use `shutdown` from a connected session to stop the server cleanly.
+
+## Run Tests
+
+Run the automated test suite:
+
+```bash
+dart test -r expanded
+```
+
+Run static analysis:
+
+```bash
+dart analyze
+```
+
+## Manual Smoke Test
+
+One simple localhost smoke pass looks like this:
+
+1. Start the server with `dart run bin/dartmud.dart`
+2. Connect with `telnet 127.0.0.1 5700`
+3. Create a new user
+4. Run `help`
+5. Run `look`
+6. Run `say hello`
+7. Run `shutdown`
+
+User save files are written under `users/`.
+
+## Project Layout
+
+- `bin/dartmud.dart`: primary modern entrypoint
+- `DartMud.dart`: compatibility wrapper entrypoint
+- `Connection.dart`: compatibility wrapper for the connection layer
+- `lib/src/`: modern Dart 3 implementation
+- `lib/rooms/`: compatibility wrappers for room modules
+- `users/`: persisted player save files
+- `test/`: automated tests
+
+## Compatibility Notes
+
+- Existing `users/*.usr` files remain readable by the Dart 3 port
+- Top-level legacy files in `lib/` remain as wrappers/exports for compatibility
+- The runtime preserves the original default localhost behavior

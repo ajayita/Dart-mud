@@ -1,0 +1,21 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - Connection.dart
+    - DartMud.dart
+    - lib/Colors.dart
+    - lib/Commands.dart
+    - lib/Container.dart
+    - lib/Editor.dart
+    - lib/GameObject.dart
+    - lib/Login.dart
+    - lib/Manager.dart
+    - lib/Mudlib.dart
+    - lib/Room.dart
+    - lib/User.dart
+    - lib/rooms/Matt.dart
+
+linter:
+  rules:
+    avoid_print: false
